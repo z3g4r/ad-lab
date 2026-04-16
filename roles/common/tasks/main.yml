@@ -16,11 +16,11 @@
     executable: powershell.exe
   ignore_errors: yes
 
-- name: Windows | Set Swiss German keyboard layout
+- name: Windows | Set Polish keyboard layout
   win_shell: |
-    $langList = New-WinUserLanguageList de-CH
+    $langList = New-WinUserLanguageList pl-PL
     $langList[0].InputMethodTips.Clear()
-    $langList[0].InputMethodTips.Add('0807:00000807')
+    $langList[0].InputMethodTips.Add('0415:00000415')
     Set-WinUserLanguageList $langList -Force
   args:
     executable: powershell.exe

@@ -13,8 +13,8 @@ This role provides common baseline configuration for Windows servers in the AD l
    - Ensures clean state for subsequent DSC operations
 
 2. **Regional Settings**
-   - Configures Swiss German keyboard layout (de-CH)
-   - Sets keyboard input method to Swiss German (0807:00000807)
+   - Configures Polish keyboard layout (pl-PL)
+   - Sets keyboard input method to Polish Programmers (0415:00000415)
 
 3. **PowerShell Module Installation**
    - Installs NuGet package provider with TLS 1.2
@@ -49,7 +49,7 @@ This role uses minimal variables. Regional and security settings are hardcoded f
 
 - This role should typically be applied before other roles that use PowerShell DSC
 - The DSC cleanup tasks help prevent conflicts from previous failed DSC operations
-- Swiss German keyboard layout is configured for the lab environment locale
+- Polish keyboard layout is configured for the lab environment locale
 - Remote Desktop is configured with Network Level Authentication (NLA) for security
 
 ## Dependencies

@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   # Configure a Shared Folder:
-  config.vm.synced_folder "E:/VMWare_Storage/Virtual Machines/Shared-Folder",
+  config.vm.synced_folder "C:/GitRepos/ad-lab/Shared-Folder",
                           "C:/Shared-Folder"
 
 
@@ -128,10 +128,10 @@ end
     linsrv1.vm.network :forwarded_port, guest: 22, host: 6222, id: "msrdp"
 
     # Adjust the shared-folder:
-    linsrv1.vm.synced_folder "E:/VMWare_Storage/Virtual Machines/Shared-Folder",
-                          "C:/Shared-Folder", disabled: true
-    # linsrv1.vm.synced_folder "E:/VMWare_Storage/Virtual Machines/Shared-Folder",
-    #                        "/home/vagrant/Shared-Folder"
+    # linsrv1.vm.synced_folder "C:/GitRepos/ad-lab/Shared-Folder",
+    #                       "C:/Shared-Folder", disabled: true
+    linsrv1.vm.synced_folder "C:/GitRepos/ad-lab/Shared-Folder",
+                            "/home/vagrant/Shared-Folder"
   end
 
 end

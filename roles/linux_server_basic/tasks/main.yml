@@ -4,12 +4,12 @@
     name: "{{ timezone }}"
   become: yes
 
-- name: "[{{ inventory_hostname }}] Set keyboard layout to Swiss German"
+- name: "[{{ inventory_hostname }}] Set keyboard layout to Polish Programmers"
   copy:
     content: |
       XKBMODEL="pc105"
-      XKBLAYOUT="ch"
-      XKBVARIANT="de_nodeadkeys"
+      XKBLAYOUT="pl"
+      XKBVARIANT=""
       XKBOPTIONS=""
       BACKSPACE="guess"
     dest: /etc/default/keyboard

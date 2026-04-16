@@ -7,8 +7,8 @@ This role configures baseline settings for Windows workstations in the AD lab en
 ## What This Role Does
 
 1. **Regional Settings**
-   - Configures Swiss German keyboard layout (de-CH)
-   - Sets keyboard input method to Swiss German (0807:00000807)
+   - Configures Polish keyboard layout (pl-PL)
+   - Sets keyboard input method to Polish Programmers (0415:00000415)
 
 2. **PowerShell Module Installation**
    - Installs NuGet package provider with TLS 1.2
@@ -61,7 +61,7 @@ chocolatey_version: "1.2.0"        # Specific version of Chocolatey to install
 - The role will automatically reboot if the hostname change requires it
 - Chocolatey is installed with a specific version for consistency
 - Remote Desktop is configured with Network Level Authentication (NLA) for security
-- Swiss German keyboard layout is configured for the lab environment locale
+- Polish keyboard layout is configured for the lab environment locale
 
 ## Installed Software
 
