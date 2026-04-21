@@ -1,5 +1,3 @@
-Here’s the flow for your case:
-
 ```text
 Windows service (client, domain account, no keytab)
         |
@@ -13,7 +11,7 @@ Windows service (client, domain account, no keytab)
    AD DC / KDC
         |
         | 3) TGS exchange for target SPN
-        |    SPN = HTTP/linux-srv01.frostylabs.local
+        |    SPN = HTTP/linux-srv01.zegarnet.local
         |    gets service ticket for Apache
         v
       LSASS / SSPI
@@ -33,11 +31,9 @@ Apache + mod_auth_gssapi
    Access granted / denied
 ```
 
-Now the detailed version.
-
 ## 1. What the Windows service does with AD before it ever talks to Apache
 
-Your Windows service is running as a domain account such as `svc_client_app`. It is not using a keytab. That means it relies on the normal Windows security stack:
+Windows service is running as a domain account such as `svc_client_app`. It is not using a keytab. That means it relies on the normal Windows security stack:
 
 * the service has a Windows logon session
 * LSASS holds the Kerberos credentials for that logon session
@@ -61,13 +57,13 @@ If the service already has a valid TGT in its logon session, great. If not, Wind
 
 ## 2. The AS exchange with AD
 
-Before your service can get a ticket for Apache, it needs a TGT.
+Before a service can get a ticket for Apache, it needs a TGT.
 
 That is the AS exchange:
 
 ```text
-Client identity: svc_client_app@FROSTYLABS.LOCAL
-Target: krbtgt/FROSTYLABS.LOCAL
+Client identity: svc_client_app@zegarnet.LOCAL
+Target: krbtgt/zegarnet.LOCAL
 ```
 
 Very roughly:
@@ -91,13 +87,13 @@ So after this step, Windows has a cached TGT for the client service account.
 Now your service wants to call:
 
 ```text
-HTTP/linux-srv01.frostylabs.local
+HTTP/linux-srv01.zegarnet.local
 ```
 
 SSPI/LSASS asks AD for a **service ticket** for that SPN.
 
 ```text
-Windows service -> LSASS/SSPI -> AD KDC (TGS-REQ for HTTP/linux-srv01.frostylabs.local)
+Windows service -> LSASS/SSPI -> AD KDC (TGS-REQ for HTTP/linux-srv01.zegarnet.local)
 AD KDC -> LSASS/SSPI           (TGS-REP with service ticket)
 ```
 
@@ -114,7 +110,7 @@ Over HTTP, the service usually uses **Negotiate** auth. So the HTTP message look
 
 ```http
 GET /kerberos/ HTTP/1.1
-Host: linux-srv01.frostylabs.local
+Host: linux-srv01.zegarnet.local
 Authorization: Negotiate <base64 token>
 ```
 
@@ -166,7 +162,7 @@ Flags controlling behavior, such as mutual authentication request.
 This is the service ticket AD issued for:
 
 ```text
-HTTP/linux-srv01.frostylabs.local
+HTTP/linux-srv01.zegarnet.local
 ```
 
 That ticket includes, in effect:
@@ -276,16 +272,16 @@ Responsible for:
 1. Service starts as DOMAIN\svc_client_app
    |
    v
-2. LSASS obtains/holds TGT for svc_client_app@FROSTYLABS.LOCAL
+2. LSASS obtains/holds TGT for svc_client_app@zegarnet.LOCAL
    |
    v
-3. Service wants HTTP/linux-srv01.frostylabs.local
+3. Service wants HTTP/linux-srv01.zegarnet.local
    |
    v
 4. LSASS sends TGS-REQ to AD using TGT
    |
    v
-5. AD returns service ticket for HTTP/linux-srv01.frostylabs.local
+5. AD returns service ticket for HTTP/linux-srv01.zegarnet.local
    |
    v
 6. SSPI builds AP-REQ:
