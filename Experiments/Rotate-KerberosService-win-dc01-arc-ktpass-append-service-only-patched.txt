@@ -1,6 +1,6 @@
 <# 
 .SYNOPSIS
-    Rotate a Kerberos SERVICE keytab for FrostyLabs ad-lab from win-dc01,
+    Rotate a Kerberos SERVICE keytab for zegarnet ad-lab from win-dc01,
     using an Arc-style ktpass append workflow on the domain controller.
 
 .DESCRIPTION
@@ -47,12 +47,12 @@ param(
     [ValidateSet('Bootstrap','Rotate','Commit')]
     [string]$Action,
 
-    [string]$DomainFqdn       = 'frostylabs.local',
-    [string]$DomainController = 'win-dc01.frostylabs.local',
-    [string]$OuDn             = 'CN=Users,DC=frostylabs,DC=local',
+    [string]$DomainFqdn       = 'zegarnet.local',
+    [string]$DomainController = 'win-dc01.zegarnet.local',
+    [string]$OuDn             = 'CN=Users,DC=zegarnet,DC=local',
 
     [string]$ServiceAccountName = 'svc_http_linux',
-    [string]$ServiceHost        = 'linux-srv01.frostylabs.local',
+    [string]$ServiceHost        = 'linux-srv01.zegarnet.local',
 
     [string]$LinuxHost          = '192.168.139.14',
     [int]   $LinuxPort          = 22,
@@ -62,7 +62,7 @@ param(
     [string]$RemoteKeytabPath   = '/etc/apache2/http_linux-srv01.keytab',
     [string]$RemoteMetaPath     = '/etc/apache2/http_linux-srv01.keytab.meta',
     [string]$RemoteApacheConf   = '/etc/apache2/conf-available/kerberos-demo.conf',
-    [string]$RemoteApacheDocDir = '/var/www/frostylabs/kerberos',
+    [string]$RemoteApacheDocDir = '/var/www/zegarnet/kerberos',
 
     [string]$WorkDir = 'C:\Kerberos-Rotation-Service-Arc'
 )
